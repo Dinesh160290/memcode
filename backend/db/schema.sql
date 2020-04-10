@@ -19,7 +19,7 @@ CREATE TABLE "user" (
   username VARCHAR NOT NULL,
   avatar_url VARCHAR,
   email TEXT,
-  created_at TIMESTAMP NOT NULL DEFAULT timezone('UTC', now()),
+  created_at TIMESTAMP NOT NULL DEFAULT now(),
   unique (oauth_provider, oauth_id)
 );
 
@@ -46,7 +46,7 @@ CREATE TABLE course (
   title VARCHAR NOT NULL CHECK (char_length(title) >= 2),
   description TEXT,
   if_public BOOLEAN DEFAULT true,
-  created_at TIMESTAMP NOT NULL DEFAULT timezone('UTC', now()),
+  created_at TIMESTAMP NOT NULL DEFAULT now(),
 
   user_id INTEGER REFERENCES "user" (id) ON DELETE CASCADE NOT NULL,
   course_category_id INTEGER REFERENCES course_category (id) ON DELETE SET DEFAULT DEFAULT 1
@@ -84,7 +84,7 @@ CREATE TABLE problem (
   content JSON,
   position INTEGER DEFAULT 0,
 
-  created_at TIMESTAMP NOT NULL DEFAULT timezone('UTC', now()),
+  created_at TIMESTAMP NOT NULL DEFAULT now(),
   course_id INTEGER REFERENCES course (id) ON DELETE CASCADE NOT NULL
 );
 
@@ -92,7 +92,7 @@ CREATE TABLE course_user_is_learning (
   id SERIAL PRIMARY KEY,
 
   active BOOLEAN NOT NULL, -- whether it's shown in /courses/learning
-  started_learning_at TIMESTAMP NOT NULL DEFAULT timezone('UTC', now()),
+  started_learning_at TIMESTAMP NOT NULL DEFAULT now(),
 
   course_id INTEGER REFERENCES course (id) ON DELETE CASCADE NOT NULL,
   user_id INTEGER REFERENCES "user" (id) ON DELETE CASCADE NOT NULL,
@@ -107,7 +107,7 @@ CREATE TABLE problem_user_is_learning (
   consecutive_correct_answers SMALLINT NOT NULL,
   next_due_date TIMESTAMP NOT NULL,
   if_ignored BOOLEAN DEFAULT false,
-  last_reviewed_at TIMESTAMP NOT NULL DEFAULT timezone('UTC', now()),
+  last_reviewed_at TIMESTAMP NOT NULL DEFAULT now(),
 
   problem_id INTEGER REFERENCES problem (id) ON DELETE CASCADE NOT NULL,
   course_user_is_learning_id INTEGER REFERENCES "course_user_is_learning" (id) ON DELETE CASCADE NOT NULL,
@@ -125,7 +125,7 @@ CREATE TABLE notification (
   type VARCHAR NOT NULL,
   content JSON NOT NULL,
   if_read BOOLEAN NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT timezone('UTC', now()),
+  created_at TIMESTAMP NOT NULL DEFAULT now(),
 
   user_id INTEGER REFERENCES "user" (id) ON DELETE CASCADE NOT NULL
 );
@@ -135,8 +135,8 @@ CREATE TABLE course_rating (
 
   rating INTEGER CHECK (rating >= 1 AND rating <= 5),
 
-  created_at TIMESTAMP NOT NULL DEFAULT timezone('UTC', now()),
-  updated_at TIMESTAMP NOT NULL DEFAULT timezone('UTC', now()),
+  created_at TIMESTAMP NOT NULL DEFAULT now(),
+  updated_at TIMESTAMP NOT NULL DEFAULT now(),
 
   course_id INTEGER REFERENCES course (id) ON DELETE CASCADE NOT NULL,
   user_id INTEGER REFERENCES "user" (id) ON DELETE CASCADE NOT NULL
@@ -144,7 +144,7 @@ CREATE TABLE course_rating (
 
 CREATE TABLE coauthor (
   id SERIAL PRIMARY KEY,
-  created_at TIMESTAMP NOT NULL DEFAULT timezone('UTC', now()),
+  created_at TIMESTAMP NOT NULL DEFAULT now(),
 
   user_id INTEGER REFERENCES "user" (id) NOT NULL,
   course_id INTEGER REFERENCES course (id) ON DELETE CASCADE NOT NULL,
@@ -153,8 +153,27 @@ CREATE TABLE coauthor (
 );
 
 -- Default category values
-INSERT INTO course_category_group (name)
-VALUES ('Other');
+INSERT INTO "public"."course_category_group" ("id", "name") VALUES
+('2', 'Hard Sciences'),
+('3', 'Soft Sciences'),
+('4', 'Languages');
 
-INSERT INTO course_category (name, course_category_group_id)
-VALUES ('Other', 1);
+
+INSERT INTO "public"."course_category" ("id", "name", "course_category_group_id") VALUES
+('2', 'Mathematics', '2'),
+('3', 'Physics', '2'),
+('4', 'Biology', '2'),
+('6', 'Programming Languages', '2'),
+('7', 'Computer Science', '2'),
+('8', 'Politics', '3'),
+('9', 'Economics', '3'),
+('10', 'Psychology', '3'),
+('11', 'Law', '3'),
+('12', 'History', '3'),
+('13', 'Music', '3'),
+('14', 'Literature', '3'),
+('15', 'English', '4'),
+('16', 'German', '4'),
+('18', 'Spanish', '4'),
+('19', 'Other', '4'),
+('20', 'Philosophy', '3');

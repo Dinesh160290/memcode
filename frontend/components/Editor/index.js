@@ -10,7 +10,7 @@ import subScriptHandler        from '~/services/quill/handlers/subScriptHandler'
 
 import ReactQuill from 'react-quill';
 
-import { tippy } from '@tippy.js/react';
+import { tippy } from '@tippyjs/react';
 
 // ___Why is it not defined inside the render() function?
 //    We must define it here, otherwise we'll be getting infinite loops!
@@ -77,7 +77,9 @@ const tip = (button, explanation, shortcut, instruction) => {
   const shortcutDiv = shortcut ? `<div class="shortcut">${shortcut}</div>` : '';
   const instructionDiv = instruction ? `<div class="instruction">${instruction}</div>` : '';
   tippy(button, {
-    content: `<div class="quill-toolbar-tooltip">${explanationDiv} ${shortcutDiv} ${instructionDiv}</div>`
+    content: `<div class="quill-toolbar-tooltip">${explanationDiv} ${shortcutDiv} ${instructionDiv}</div>`,
+    allowHTML: true,
+    theme: '-bright'
   });
 };
 

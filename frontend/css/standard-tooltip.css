@@ -1,26 +1,20 @@
 @import 'css/variables';
 
-.standard-tooltip{
-
-  &.-bright{
+// .tippy-box[data-theme='-bright'] is needed for vanilla tippy.js (e.g. in Quill toolbar)
+.standard-tooltip, .tippy-box{
+  &.-bright, &[data-theme='-bright']{
     background-color: rgb(64, 58, 110);
 
-    &[data-placement^=top] .tippy-arrow{
-      border-top-color: rgb(64, 58, 110);
-    }
-    &[data-placement^=bottom] .tippy-arrow{
-      border-bottom-color: rgb(64, 58, 110);
+    .tippy-arrow{
+      color: rgb(64, 58, 110);
     }
   }
 
-  &.-dark{
+  &.-dark, &[data-theme='-dark']{
     background-color: rgb(33, 36, 73);
 
-    &[data-placement^=top] .tippy-arrow{
-      border-top-color: rgb(33, 36, 73);
-    }
-    &[data-placement^=bottom] .tippy-arrow{
-      border-bottom-color: rgb(33, 36, 73);
+    .tippy-arrow{
+      color: rgb(33, 36, 73);
     }
   }
 

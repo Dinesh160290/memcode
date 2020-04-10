@@ -12,7 +12,7 @@ class Footer extends React.Component {
           <span className="pipe">|</span>
           <Link to="/contact">Contact</Link>
           <span className="pipe">|</span>
-          <a href="https://github.com/lakesare/memcode">Github</a>
+          <a href="https://github.com/lakesare/memcode" target="_blank" rel="noopener noreferrer">Github</a>
         </section>
 
         <section className="email">

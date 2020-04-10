@@ -11,12 +11,16 @@
   },
   "main": "",
   "scripts": {
-    "heroku-postbuild": "make heroku-postbuild"
+    "heroku-postbuild": "make heroku-postbuild",
+    "all": "npm run start && npm run backend && npm run frontend",
+    "start": "SET NODE_ENV=development && node_modules\\.bin\\nodemon --inspect --watch backend backend\\webpacked\\index.js",
+    "backend": "cd backend && SET NODE_ENV=development && ..\\node_modules\\.bin\\webpack --config .\\webpack\\development.config.js -w",
+    "frontend": "cd frontend && SET NODE_ENV=development && ..\\node_modules\\.bin\\webpack --config .\\webpack\\development.config.js -w"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
+    "@babel/cli": "^7.8.4",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-decorators": "^7.0.0",
@@ -55,7 +59,7 @@
     "glob": "^7.1.3",
     "json-loader": "^0.5.4",
     "json5": "^2.1.0",
-    "karma": "^4.0.1",
+    "karma": "^4.4.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jsdom-launcher": "^7.1.0",
@@ -81,7 +85,7 @@
   },
   "dependencies": {
     "@redux-offline/redux-offline": "^2.5.1",
-    "@tippy.js/react": "^3.1.1",
+    "@tippyjs/react": "^4.0.0-alpha.4",
     "acorn-dynamic-import": "^4.0.0",
     "acorn-jsx": "^5.0.1",
     "airbnb-browser-shims": "^3.2.0",
@@ -128,6 +132,7 @@
     "multer-s3": "^2.9.0",
     "node-fetch": "^2.3.0",
     "node-libs-browser": "^2.2.0",
+    "npm-run-all": "^4.1.5",
     "object-hash": "^1.3.1",
     "parchment": "^1.1.4",
     "pg-promise": "^8.5.6",
